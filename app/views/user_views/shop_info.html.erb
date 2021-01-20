@@ -1,0 +1,101 @@
+<style>
+    body {
+        /* background-color: wheat; */
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .good-frame {
+        background-color: white;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin-bottom: 20px;
+    }
+
+    .good-frame h4 {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .good-frame .title {
+        padding-top: 13px;
+        padding-bottom: 10px;
+
+        font-size: large;
+        font-weight: bold;
+    }
+
+    .good-frame .see-more {
+        padding-top: 10px;
+        padding-bottom: 13px;
+
+        font-size: smaller;
+    }
+
+    .img-frame {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        /* 宽高比例为1：1 */
+    }
+
+    .img-frame img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<%= render 'nav' %>
+
+
+<main style="margin-top: 20px;">
+  <div class="container">
+    <div class="row" style="margin-left: 0px; margin-right: 0px; ">
+      <div class="col-md-12" style="background-color: white; margin-top: 20px;  margin-bottom: 20px; ">
+        <div>
+          <h4
+            style="font-size: larger; font-weight: bold; color: cadetblue;  font-family: 'Times New Roman', Times, serif;">
+            <%= @shop.name %></h4>
+          <p>
+            <span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;<%= @shop.description %>
+          </p>
+          <p>
+            <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;<%= @shop.address %>
+          </p>
+        </div>
+
+      </div>
+    </div>
+    <div class="row" style="margin-left: 0px; margin-right: 0px; ">
+      <div class="col-md-12" style="background-color: white; margin-top: 20px;  margin-bottom: 20px; ">
+        <div class="col-md-12">
+          <h4 style="font-size: larger; font-weight: bold; text-align: center;">全部商品</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <% @shop.products.each do |product| %>
+        <div class="col-md-3 ">
+          <div class="good-frame">
+            <div class=" title"><%= product.name %></div>
+            <div class="img-frame">
+              <a href="<%= user_product_path(product) %>"><%= image_tag product.image %></a>
+            </div>
+            <div class="see-more">
+              <a href="<%= user_product_path(product) %>">查看详情</a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</main>

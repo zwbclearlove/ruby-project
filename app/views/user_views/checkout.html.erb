@@ -1,0 +1,77 @@
+<%= render 'nav' %>
+
+<main class="container-fluid">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+
+    <div class="col-sm-12" style="margin-top: 30px">
+      <h3 class="title">确认商品信息</h3>
+      <hr>
+      <table class="table" style="margin-top: 10px;" id="confirm-table">
+        <tbody>
+        <tr>
+          <th>商店名</th>
+          <th colspan="3">商品信息</th>
+          <th>单价</th>
+          <th>数量</th>
+          <th>优惠</th>
+          <th>小计</th>
+        </tr>
+        <% @pre_orders.each { |shop_name, cart_items| %>
+            <% cart_items.each { |cart_item| %>
+            <tr>
+              <td><%= shop_name %></td>
+              <td width="10%">
+                <%= image_tag cart_item.product.image, size: '75x75' %>
+              </td>
+              <td width="10%"><%= cart_item.product.name %></td>
+              <td width="30%"><%= cart_item.product.description %></td>
+              <td width="10%">￥<span><%= cart_item.product.price %></span> </td>
+              <td width="10%" class="unit-count"><%= cart_item.product_number %></td>
+              <td width="10%">
+                无
+              </td>
+              <td width="10%">
+                ￥<span class="subtotal"><%= cart_item.product_number * cart_item.product.price %></span>
+              </td>
+            </tr>
+            <%  } %>
+        <%  } %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4 col-md-offset-8" style="text-align: right;">
+      共有<span id="total-count" style="color: #f71117 "><%= @order_num %></span>笔订单，共计：
+      <span id="total-price" style="color: #f71117;font-size: 1.2em;"><%= @total_price %></span>元
+    </div>
+
+    <div class="page-header">
+      <h3>
+        选择收货地址
+      </h3>
+    </div>
+    <%= form_with url: user_gen_order_path do %>
+      <div class="form-group">
+        <label class="control-label">地址</label>
+
+        <select class="form-control" name="address">
+          <% for address in @addresses %>
+            <option><%= address.address %></option>
+          <% end %>
+        </select>
+
+      </div>
+      <div class="col-md-4 col-md-offset-8" style="text-align: right;">
+        <%= submit_tag '确定下单', class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-sm-2"></div>
+
+</main>
+
+
+
+
+
+

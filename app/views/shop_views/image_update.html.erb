@@ -1,0 +1,5 @@
+<%= render 'nav' %>
+<%= form_with url: shop_do_shop_image_update_path, multipart: true do %>
+  <%= file_field_tag :picture %>
+  <%= submit_tag '修改' %>
+<% end %>

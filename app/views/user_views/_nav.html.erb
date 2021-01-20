@@ -1,0 +1,43 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<%= root_path %>">购物系统</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li><a href="<%= system_detail_path %>">系统说明</a></li>
+        <li><a href="<%= user_favorites_path %>">收藏夹</a></li>
+        <li><a href="<%= my_messages_path %>">消息</a></li>
+        <li><a href="<%= my_cart_path %>">购物车</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            我的
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <% if session[:current_userid] %>
+              <li><a href="#">欢迎, <%= session[:current_username] %></a></li>
+              <li><a href="<%= user_info_path %>">我的信息</a></li>
+
+              <li><a href="<%= my_orders_path(5) %>">我的订单</a></li>
+              <li class="divider"></li>
+              <li><a href="<%= logout_path %>">登出</a></li>
+            <% else %>
+              <li><a href="<%= login_path %>">登录</a></li>
+              <li><a href="<%= register_path %>">注册</a></li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <% unless notice.nil? %>
+    <div id="myAlert" class="alert alert-success">
+      <a href="#" class="close" data-dismiss="alert">&times;</a>
+      <%= notice %>
+    </div>
+  <% end %>
+</div>

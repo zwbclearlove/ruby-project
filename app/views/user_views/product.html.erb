@@ -1,0 +1,159 @@
+<style>
+    .img-frame {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        /* 宽高比例为1：1 */
+    }
+
+    .img-frame img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #good-img {
+        width: 100%;
+        height: 100%;
+        border: 1px wheat solid;
+    }
+
+    .avatar {
+        width: 60%;
+        border-radius: 50%;
+        border: 1px wheat solid;
+    }
+
+    .commenter {
+        color: cadetblue;
+        font-size: large;
+        font-weight: bold;
+    }
+
+    .comment {
+        margin-top: 10px;
+        font-size: 100%;
+        line-height: 140%;
+    }
+
+    .comment-time {
+        margin-top: 10px;
+        color: #bbb;
+    }
+</style>
+
+<%= render 'nav' %>
+<main class="container-fluid">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="img-frame">
+              <% if @image %>
+                <%= image_tag 'no_image.png' %>
+              <% else %>
+                <%= image_tag @product.image %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="col-md-5 col-md-offset-1">
+            <h3 id="good-name"><%= @product.name %></h3>
+            <hr>
+            <div style="color: red;">
+              ￥ <span id="unit-price"><%= @product.price %></span>
+            </div>
+
+
+            <hr>
+            <div id="good-descrip"><%= @product.description %></div>
+            <hr>
+            库存<span id="inventory"><%= @product.stock %></span>件
+            <hr>
+            销量<span id="inventory"><%= @product.sales %></span>件
+            <hr>
+
+            <hr>
+            <% if @favorited %>
+              <button class="btn btn-primary col-md-5"
+                      onclick="window.window.location.href='<%= unfavorite_product_path(@product) %>'">
+                取消收藏</button>
+            <% else %>
+              <button class="btn btn-primary col-md-5"
+                      onclick="window.window.location.href='<%= favorite_product_path(@product) %>'">
+                收藏</button>
+            <% end %>
+
+            <button class="btn btn-success col-md-5 col-md-offset-1"
+                    onclick="window.window.location.href='<%= add_to_cart_path %>'">
+              加入购物车</button>
+          </div>
+        </div>
+        <hr>
+        <div>
+          <h4
+            style="font-size: larger; font-weight: bold; color: cadetblue;  font-family: 'Times New Roman', Times, serif;">
+            SHOP:<%= @product.shop.name %></h4>
+
+
+          <% if @followed %>
+            <%= link_to '取消关注', unfollow_shop_path(@product.shop) %>
+          <% else %>
+            <%= link_to '关注店铺', follow_shop_path(@product.shop) %>
+          <% end %>
+          <%= link_to '进店逛逛', user_shop_info_path(@product.shop) %>
+        </div>
+        <div style="margin-top: 60px; margin-bottom: 10px; font-size: large;">
+          全部评价
+        </div>
+        <div class="row" style="margin-top: 0px;">
+          <table class="table" id="comment-table"
+                 style="table-layout:fixed ;border-bottom: 1px solid #ddd;">
+            <thead>
+            <tr>
+              <th width="10%"></th>
+              <th width="90%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for comment in @product.comments %>
+              <tr>
+                <td style="text-align: center;">
+                  <%= image_tag comment.user.image, class: 'avatar' %>
+                </td>
+                <td>
+                  <div style="padding-left: 1em;">
+                    <div class="commenter"><%= comment.user.username %></div>
+                    <div class="comment">
+                      <%= comment.content %>
+                    </div>
+                    <div class="comment-time"><%= comment.create_date %></div>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+
+            </tbody>
+          </table>
+        </div>
+        <%= form_with url: user_comment_path(@product.id) do %>
+          <p>
+            新评论: <%= text_field_tag :content %>
+          </p>
+          <%= submit_tag '发布', class: "btn btn-success" %>
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+

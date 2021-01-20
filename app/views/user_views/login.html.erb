@@ -1,0 +1,46 @@
+
+<style>
+    body {
+
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: 0 -300px;
+
+    }
+</style>
+
+
+<!-- 主体部分 -->
+<main style="margin-top: 150px;">
+  <div class="container">
+    <div class="row">
+      <!-- <div class="col-md-8">
+          <img src="../images/login/pngsucai_324660_8e29d5.png" alt="">
+      </div> -->
+
+      <div class="col-md-4 col-md-offset-4"
+           style="border: 1px solid #ddd; border-radius: 2%; background-color: rgb(253, 252, 252);">
+        <p id="notice"><%= notice %></p>
+
+        <h3 style="text-align: center; margin-bottom: 20px;">欢迎登录</h3>
+
+        <div id="prompt">
+
+        </div>
+        <h3><%= alert %></h3>
+        <%= form_with url: do_login_path do %>
+          <p>
+            用户名: <%= text_field_tag :username %>
+          </p>
+          <p>
+            密码: <%= password_field_tag :password %>
+          </p>
+          <%= submit_tag '登录' %>
+        <% end %>
+
+        <p>还没有账号？ <a href="<%= register_path %>">注册一个</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

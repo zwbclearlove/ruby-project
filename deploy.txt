@@ -1,0 +1,13 @@
+deploy:
+  stage: deploy
+  script:
+    - puma-stop 5000
+    - rsync -arv --delete ./shop_system ~
+    - cd ~/shop_system
+    - bundle install
+    - yarn install --check-files
+    - yarn add jquery jquery-ui-dist
+    - rails db:migrate
+    - nohup rails server -d -b 0.0.0.0 -p 5000 &
+  only:
+    - project

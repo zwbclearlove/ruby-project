@@ -1,0 +1,41 @@
+<style>
+
+</style>
+
+<%= render 'nav' %>
+
+
+<main class="container-fluid">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="page-header">
+      <h2>
+        我的消息
+      </h2>
+    </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th width="5%"></th>
+        <th width="80%"></th>
+        <th width="15%"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for message in @messages %>
+        <tr>
+          <td><%= image_tag message.shop.image, size: '75x75' %></td>
+          <td><h4><%= message.shop.name %></h4>
+            <h5><%= message.content %></h5>
+            <p>时间:<%= message.create_date %></p></td>
+          <td><%= link_to '删除', user_message_delete_path(message) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+
+  </div>
+  <div class="col-sm-2"></div>
+
+</main>

@@ -1,0 +1,130 @@
+
+<%= render 'nav' %>
+
+<main class="container-fluid">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="page-header">
+      <h2>
+        全部商品
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">添加新商品</button>
+      </h2>
+    </div>
+
+    <div class="col-md-12">
+      <table class="table" style="table-layout:fixed ; ">
+        <thead>
+        <tr>
+          <th style="width: 10%;"></th>
+          <th style="width: 10%;">名称</th>
+          <th style="width: 10%;">类别</th>
+          <th style="width: 10%;">价格</th>
+          <th style="width: 10%;">库存</th>
+          <th style="width: 10%;">销量</th>
+          <th style="width: 8%;">编辑</th>
+          <th style="width: 10%;">详情</th>
+          <th style="width: 8%;">操作</th>
+          <th style="width: 8%;">优惠</th>
+          <th style="width: 8%;">删除</th>
+        </tr>
+        </thead>
+        <tbody style="height: 60px; overflow-y: auto;">
+        <% @products.each do |product| %>
+        <tr data-id="{{ product.id }}">
+          <td>
+            <!-- <a href="/shop/product/{{ product.id }}/"></a> -->
+            <div class="img-frame">
+              <%= image_tag product.image, size: '75x75' %>
+            </div>
+          </td>
+          <td style="word-wrap:break-word;" class="good-name"><%= product.name %></td>
+          <td style="word-wrap:break-word;" class="good-type"><%= product.product_type.name %></td>
+          <td class="unit-price">￥<span><%= product.price %></span> </td>
+          <td class="inventory"><%= product.stock %></td>
+          <td><%= product.sales %></td>
+          <td><button type=" button" class="btn  btn-warning"
+                      data-toggle="modal" data-target="#modify-good-modal"
+                      onclick="window.location.href='<%= edit_product_path(product) %>'">编辑</button>
+          </td>
+          <td><button type=" button" class="btn  btn-info"
+                      onclick="window.location.href='<%= show_product_path(product) %>'">查看详情</button>
+          </td>
+          <td><button type="button" class="btn  btn-default " disabled="disabled"
+                      onclick="window.location.href='/shop/product_state_change/up/?id={{ product.id }}'">上架</button>
+          </td>
+          <td>
+            <button type=" button" class="btn btn-default"
+                    disabled="disabled">优惠</button>
+          </td>
+          <td><%= link_to '删除', product, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </td>
+
+
+        </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+          <%= form_with url: shop_add_product_path do %>
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">add product</h4>
+            </div>
+            <div id="prompt">
+
+            </div>
+            <div class="col-md-10 col-md-offset-1">
+
+              <div class="form-group">
+                <label class="control-label">product name</label>
+                <%= text_field_tag :name, nil, class:"form-control"%>
+              </div>
+              <div class="form-group">
+                <label class="control-label">product price</label>
+                <%= text_field_tag :price, nil, class:"form-control"%>
+              </div>
+              <div class="form-group">
+                <label class="control-label">product description</label>
+                <%= text_field_tag :description, nil, class:"form-control"%>
+              </div>
+              <div class="form-group">
+                <label class="control-label">product stock</label>
+                <%= text_field_tag :stock, nil, class:"form-control"%>
+              </div>
+              <div class="form-group">
+                <label class="control-label">product type</label>
+
+                <select class="form-control" name="type">
+                  <% for t in @types %>
+                    <option><%= t.name %></option>
+                  <% end %>
+                </select>
+
+              </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <%= submit_tag '添加', class: "btn btn-success" %>
+            </div>
+
+          <% end %>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal -->
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+
+</main>
+
+
+

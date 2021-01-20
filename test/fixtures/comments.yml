@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  create_date: 2021-01-08 14:36:19
+
+two:
+  content: MyText
+  create_date: 2021-01-08 14:36:19

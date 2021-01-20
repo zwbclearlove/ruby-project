@@ -1,0 +1,70 @@
+<%= render 'nav' %>
+<style>
+
+</style>
+<main class="container-fluid">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="page-header">
+      <h2>
+        用户信息
+      </h2>
+    </div>
+    <h4>
+      <strong>头像:</strong>
+      <% if @image %>
+        <%= image_tag 'default_avatar.png', size: '100x100' %>
+      <% else %>
+        <%= image_tag @user.image, size: '100x100' %>
+      <% end %>
+      <br>
+      <%= link_to '更换头像', user_image_update_path, class: "btn btn-success"%>
+    </h4>
+    <h4>
+      <strong>用户名:</strong>
+      <%= @user.username %>
+    </h4>
+
+    <h4>
+      <strong>昵称:</strong>
+      <%= @user.nickname %>
+    </h4>
+
+    <h4>
+      <strong>邮箱:</strong>
+      <%= @user.email %>
+    </h4>
+    <%= link_to '编辑用户信息', edit_user_path(@user), class: "btn btn-success" %><br>
+
+    <div class="page-header">
+      <h2>
+        我的收货地址（第一次登录请完善地址信息）
+      </h2>
+    </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>收货人</th>
+        <th>电话</th>
+        <th>地址</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @addresses.each do |address| %>
+        <tr>
+          <td><%= address.receiver %></td>
+          <td><%= address.phone %></td>
+          <td><%= address.address %></td>
+          <td><%= link_to '修改', edit_address_path(address) %></td>
+          <td><%= link_to '删除', address, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= link_to '添加新地址' ,new_address_path, class: "btn btn-success" %><br>
+  </div>
+  <div class="col-sm-2"></div>
+
+</main>

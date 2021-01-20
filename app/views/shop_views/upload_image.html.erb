@@ -1,0 +1,5 @@
+<%= render 'nav' %>
+<%= form_with url: do_product_image_update_path(@product), multipart: true do %>
+  <%= file_field_tag :picture %>
+  <%= submit_tag '更新' %>
+<% end %>

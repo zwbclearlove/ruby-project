@@ -1,0 +1,113 @@
+<%= render 'nav' %>
+
+<main class="container-fluid">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+
+    <div class="col-sm-12" style="margin-top: 30px">
+      <h3 class="title">我的订单</h3>
+      <hr>
+
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='<%= my_orders_path(5) %>'">全部订单</button>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='<%= my_orders_path(0) %>'">待发货</button>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='<%= my_orders_path(1) %>'">已发货</button>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='<%= my_orders_path(2) %>'">待评论</button>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='<%= my_orders_path(3) %>'">已完成</button>
+    </div>
+    <% if @no_order %>
+      <h4>目前没有订单</h4>
+    <% else %>
+    <div class="tab-content">
+      <div class="tab-pane active" id="panel-all">
+        <table class="table">
+          <thead>
+          <tr>
+            <th colspan="3">商品信息</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>实付款</th>
+            <th>交易状态</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% for order in @orders %>
+            <tr>
+              <td colspan="8" style="border: 0"></td>
+            </tr>
+            <tr>
+              <td colspan="8" style="text-align: left;background-color: rgb(190, 224, 229)">
+                <div class="col-md-3">
+                  订单编号：<span><%= order.order_id %></span>
+                </div>
+                <div class="col-md-6">
+                  下单时间：<span><%= order.order_date %></span>
+                </div>
+                <div class="col-md-3 ">
+                  店铺: <span><%= order.shop.name %></span>
+                </div>
+              </td>
+            </tr>
+            <% for order_item in order.order_items %>
+              <tr data-status="to-comment">
+                <td width="10%">
+                  <a href="<%= user_product_path(order_item.product) %>"><img src="<%= image_url order_item.product.image %>" width="60" height="60" alt=""></a>
+                </td>
+                <td width="10%"><%= order_item.product.name %></td>
+                <td width="30%"><%= order_item.product.description %></td>
+                <td width="10%">￥<span><%= order_item.product.price %></span></td>
+                <td width="8%"><%= order_item.product_number %></td>
+                <td width="10%">￥<span><%= order_item.product.price * order_item.product_number %></span> </td>
+                <td width="10%" class="status">
+                  <% if order.order_status == 0 %>
+                    待发货
+                  <% elsif order.order_status == 1%>
+                    未收货
+                  <% elsif order.order_status == 2%>
+                    待评价
+                  <% elsif order.order_status == 3%>
+                    已完成
+                  <% end %>
+                </td>
+                <td width="12%">
+                  <% if order.order_status == 0 %>
+                    <button type="button" class="btn btn-default"
+                            disabled="disabled">
+                      待发货
+                    </button>
+                  <% elsif order.order_status == 1%>
+                    <button type="button" class="btn btn-success"
+                            data-toggle="modal" data-target="#exampleModal"
+                            onclick="window.window.location.href='<%= receive_product_path(order) %>'">
+                      收货
+                    </button>
+                  <% elsif order.order_status == 2%>
+                    <button type="button" class="btn btn-primary"
+                            data-toggle="modal" data-target="#exampleModal"
+                            onclick="window.window.location.href='<%= finish_order_path(order) %>'">
+                      完成
+                    </button>
+                  <% elsif order.order_status == 3%>
+                    <button type="button" class="btn btn-default"
+                            disabled="disabled">
+                      已完成
+                    </button>
+                  <% end %>
+
+                </td>
+              </tr>
+            <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+
+</main>
+

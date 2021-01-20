@@ -1,0 +1,73 @@
+<%= render 'nav' %>
+
+
+<main class="container-fluid">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="page-header">
+      <h2>
+        卖家登录信息
+      </h2>
+    </div>
+    <h4>
+      <strong>用户:</strong>
+      <%= @seller.username %>
+    </h4>
+
+    <h4>
+      <strong>密码:</strong>
+      <%= @seller.password %>
+    </h4>
+
+    <h4>
+      <strong>Email:</strong>
+      <%= @seller.email %>
+    </h4>
+    <td><%= link_to '卖家信息修改', edit_seller_path(@seller), class: "btn btn-success" %></td>
+
+    <div class="page-header">
+      <h2>
+        商店信息
+      </h2>
+    </div>
+    <h4>
+      <strong>图标:</strong>
+      <% if @image %>
+        <%= image_tag 'default_avatar.png', size: '100x100' %>
+      <% else %>
+        <%= image_tag @shop.image, size: '100x100' %>
+
+      <% end %>
+
+    </h4>
+    <br>
+    <%= link_to '商店图标修改', shop_shop_image_update_path, class: "btn btn-success"%>
+    <h4>
+      <strong>商店名:</strong>
+      <%= @shop.name %>
+    </h4>
+    <h4>
+      <strong>商店地址:</strong>
+      <%= @shop.address %>
+    </h4>
+    <h4>
+      <strong>详细描述:</strong>
+      <%= @shop.description %>
+    </h4>
+    <h4>
+      <strong>联系电话:</strong>
+      <%= @shop.telephone %>
+    </h4>
+    <br>
+    <td><%= link_to '修改商店信息', edit_shop_path(@shop), class: "btn btn-success" %></td>
+
+  </div>
+  <div class="col-sm-2"></div>
+
+</main>
+
+
+
+
+
+

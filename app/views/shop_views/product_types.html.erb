@@ -1,0 +1,40 @@
+<%= render 'nav' %>
+
+<main class="container-fluid">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <div class="page-header">
+      <h2>
+        全部商品类别
+      </h2>
+    </div>
+
+    <div class="col-md-12">
+      <table class="table" style="table-layout:fixed ; ">
+        <thead>
+        <tr>
+          <th>名称</th>
+          <th>删除</th>
+        </tr>
+        </thead>
+        <tbody style="height: 60px; overflow-y: auto;">
+        <% @product_types.each do |product_type| %>
+          <tr data-id="{{ product.id }}">
+            <td style="word-wrap:break-word;" class="good-name"><%= product_type.name %></td>
+            <td><button type="button" class="btn btn-default"
+                    disabled="disabled">
+              删除
+            </button>
+            </td>
+          </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+  <div class="col-sm-2"></div>
+
+</main>
